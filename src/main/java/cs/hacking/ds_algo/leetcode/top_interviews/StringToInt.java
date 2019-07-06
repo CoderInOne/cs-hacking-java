@@ -2,9 +2,7 @@ package cs.hacking.ds_algo.leetcode.top_interviews;
 
 public class StringToInt {
 	public int str2int(String s) {
-        Integer res = null;
-        int i = 0;
-        int flag = 0;
+        int res = 0, i = 0, sign = 1;
         char[] cs = s.toCharArray();
         int threshold = 214748364;
 
@@ -17,38 +15,19 @@ public class StringToInt {
         	i++;
 		}
 
-		for (; i < cs.length; i++) {
-        	char c = cs[i];
-        	if (c == '+' || c == '-') {
-        		if (res != null || flag != 0) {
-        			break;
-				}
-				flag = c == '-' ? -1 : 1;
-			}
-			else if (c - '0' >= 0 && c <= '9') {
-        		int n = c - '0';
-        		if (res == null) {
-        			res = n;
-				}
-				else {
-        			// check overflow
-					if (flag == -1) {
-						if (res > threshold || (res == threshold && n > 8)) {
-							return Integer.MIN_VALUE;
-						}
-					}
-					else if (res > threshold || (res == threshold && n > 7)) {
-						return Integer.MAX_VALUE;
-					}
-
-					res = res * 10 + n;
-				}
-			}
-			else {
-        		break;
-			}
+		// compute sign
+		if (i < cs.length && (cs[i] == '+' || cs[i] == '-')) {
+			sign = 1 - 2 * (cs[i++] == '-' ? 1 : 0);
 		}
 
-		return res == null ? 0 : res * (flag == 0 ? 1 : flag);
+		while (i < cs.length && cs[i] >= '0' && cs[i] <= '9') {
+        	if (res > threshold || (res == threshold && (cs[i] - '0') > 7)) {
+        		return sign == -1 ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+			}
+
+        	res = res * 10 + (cs[i++] - '0');
+		}
+
+		return res * sign;
 	}
 }

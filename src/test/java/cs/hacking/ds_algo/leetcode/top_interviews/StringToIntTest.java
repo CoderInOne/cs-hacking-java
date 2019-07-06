@@ -27,6 +27,7 @@ public class StringToIntTest {
 		testMap.put("0-1", 0);
 		testMap.put("1-1", 1);
 		testMap.put("-5-", -5);
+		testMap.put(" ", 0);
 		testMap.put("words and 987", 0);
 	}
 
