@@ -10,23 +10,23 @@ public class StringMatcher {
 	 */
 	public List<Integer> matchDistinctCharsPattern(String s, String p) {
 		List<Integer> res = new ArrayList<>();
-		for (int i = 0; i <= s.length() - p.length(); i++) {
+		int i = 0;
+		while (i <= s.length() - p.length()) {
 			if (s.charAt(i) == p.charAt(0)) {
-				int jump = -1;
 				for (int j = 1; j < p.length(); j++) {
 					if (s.charAt(i+j) != p.charAt(j)) {
-						jump = s.charAt(i+j) == p.charAt(0) ? j - 1 : j;
+						i += j;
 						break;
 					}
+
+					if (j == p.length() - 1) {
+						res.add(i);
+						i += p.length();
+					}
 				}
-				// no jump means match found
-				if (jump == -1) {
-					res.add(i);
-					i += p.length() - 1;
-				}
-				else {
-					i += jump;
-				}
+			}
+			else {
+				i++;
 			}
 		}
 		return res;
