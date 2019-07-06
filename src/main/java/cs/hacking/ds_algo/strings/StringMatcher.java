@@ -63,4 +63,17 @@ public class StringMatcher {
 
 		return res;
 	}
+
+	public List<Integer> fsm(String s, String p) {
+		List<Integer> res = new ArrayList<>();
+
+		// build fsm from p
+		// each state accept p.length's input
+		// thus has p.length's transfer path possible
+
+		// loop into s, when meet final state at i
+		// then add solution as i - p.length
+
+		return res;
+	}
 }
