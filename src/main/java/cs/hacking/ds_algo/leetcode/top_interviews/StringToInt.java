@@ -1,5 +1,9 @@
 package cs.hacking.ds_algo.leetcode.top_interviews;
 
+/**
+ * Compare to JDK implementation, this one is more elegant
+ * check java.lang.Integer#parseInt(java.lang.String, int)
+ */
 public class StringToInt {
 	public int str2int(String s) {
         int res = 0, i = 0, sign = 1;
