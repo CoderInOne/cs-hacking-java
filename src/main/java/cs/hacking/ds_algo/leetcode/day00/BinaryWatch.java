@@ -1,4 +1,4 @@
-package cs.hacking.ds_algo.leetcode.day0701;
+package cs.hacking.ds_algo.leetcode.day00;
 
 import java.util.ArrayList;
 import java.util.List;

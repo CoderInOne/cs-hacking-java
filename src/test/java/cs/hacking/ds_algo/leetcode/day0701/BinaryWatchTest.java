@@ -1,8 +1,7 @@
 package cs.hacking.ds_algo.leetcode.day0701;
 
+import cs.hacking.ds_algo.leetcode.day00.BinaryWatch;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class BinaryWatchTest {
 

@@ -1,4 +1,4 @@
-package cs.hacking.ds_algo.leetcode.day01;
+package cs.hacking.ds_algo.leetcode.day00;
 
 /**
  * TODO divide and conquer
