@@ -1,5 +1,6 @@
 package cs.hacking.ds_algo.strings;
 
+import cs.hacking.ds_algo.Pair;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -75,10 +76,12 @@ public class StringMatchTest {
 	@Test
 	public void computeTfFsm() {
 		String p = "abcd";
-		int[][] tf = new int[p.length() + 1][256];
-		strMatcher.computeTf(tf, p);
-		assertEquals(1, tf[0]['a']);
-		assertEquals(1, tf[1]['a']);
-		assertEquals(1, tf[2]['a']);
+		Map<Pair<Integer, Integer>, Integer> tf = new HashMap<>(p.length() + 1);
+//		strMatcher.computeTf(tf, p);
+//		System.out.println(tf);
+//		tf.get(Pair.from(0, 97));
+		assertEquals(1, (int) tf.get(Pair.from(0, 97)));
+		assertEquals(1, (int) tf.get(Pair.from(1, 97)));
+		assertEquals(1, (int) tf.get(Pair.from(2, 97)));
 	}
 }

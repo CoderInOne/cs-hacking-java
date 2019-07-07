@@ -1,7 +1,8 @@
 package cs.hacking.ds_algo.strings;
 
-import java.util.ArrayList;
-import java.util.List;
+import cs.hacking.ds_algo.Pair;
+
+import java.util.*;
 
 public class StringMatcher {
 	/**
@@ -70,14 +71,14 @@ public class StringMatcher {
 		// build fsm from p
 		// each state accept p.length's input
 		// thus has p.length's transfer path possible
-		int[][] tf = new int[p.length() + 1][256];
+		Map<Pair<Integer, Integer>, Integer> tf = new HashMap<>(p.length() + 1);
 		computeTf(tf, p);
 
 		// loop into s, when meet final state at i
 		// then add solution as i - p.length
 		int state = 0;
 		for (int i = 0; i < s.length(); i++) {
-			state = tf[state][s.charAt(i)];
+			state = tf.get(Pair.from(state, (int) s.charAt(i)));
 			if (state == p.length()) {
 				res.add(i - p.length() + 1);
 			}
@@ -86,10 +87,20 @@ public class StringMatcher {
 		return res;
 	}
 
-	void computeTf(int[][] tf, String p) {
-		for (int i = 0; i < tf.length; i++) {
-			for (int j = 0; j < 256; j++) {
-				tf[i][j] = nextState(i, j, p);
+	void computeTf(Map<Pair<Integer, Integer>, Integer> tf, String p) {
+//		for (int i = 0; i < tf.length; i++) {
+//			for (int j = 0; j < 256; j++) {
+//				tf[i][j] = nextState(i, j, p);
+//			}
+//		}
+		Set<Integer> s = new HashSet<>();
+		for (int c : p.toCharArray()) {
+			s.add(c);
+		}
+
+		for (int i = 0; i <= p.length(); i++) {
+			for (int c : s) {
+				tf.put(Pair.from(i, c), nextState(i, c, p));
 			}
 		}
 	}
