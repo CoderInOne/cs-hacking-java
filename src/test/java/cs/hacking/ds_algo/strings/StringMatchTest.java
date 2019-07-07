@@ -46,10 +46,39 @@ public class StringMatchTest {
 		testMap.put("1212344123422", Arrays.asList(2, 7));
 
 		for (Map.Entry<String, List<Integer>> e : testMap.entrySet()) {
-			List<Integer> res = strMatcher.robenKarp(e.getKey(), pattern, 10, 11);
+			List<Integer> res = strMatcher.robinKarp(e.getKey(), pattern, 10, 11);
 			assertArrayEquals(String.format("fail input:%s, output:%s, expect:%s",
 					e.getKey(), res, e.getValue()),
 					e.getValue().toArray(), res.toArray());
 		}
+	}
+
+	@Test
+	public void fsm() {
+		Map<String, List<Integer>> testMap = new LinkedHashMap<>();
+		String pattern = "abcd";
+		testMap.put("abcd", Collections.singletonList(0));
+		testMap.put("abc", Collections.emptyList());
+		testMap.put("aabcd", Collections.singletonList(1));
+		testMap.put("ababcd", Collections.singletonList(2));
+		testMap.put("abcbcbabccdabcdabc", Collections.singletonList(11));
+		testMap.put("abcbcbabccdabcdabcabcd", Arrays.asList(11, 18));
+
+		for (Map.Entry<String, List<Integer>> e : testMap.entrySet()) {
+			List<Integer> res = strMatcher.fsm(e.getKey(), pattern);
+			assertArrayEquals(String.format("fail input:%s, output:%s, expect:%s",
+					e.getKey(), res, e.getValue()),
+					e.getValue().toArray(), res.toArray());
+		}
+	}
+
+	@Test
+	public void computeTfFsm() {
+		String p = "abcd";
+		int[][] tf = new int[p.length() + 1][256];
+		strMatcher.computeTf(tf, p);
+		assertEquals(1, tf[0]['a']);
+		assertEquals(1, tf[1]['a']);
+		assertEquals(1, tf[2]['a']);
 	}
 }

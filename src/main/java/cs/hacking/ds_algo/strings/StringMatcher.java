@@ -31,7 +31,7 @@ public class StringMatcher {
 		return res;
 	}
 
-	public List<Integer> robenKarp(String s, String p, int d, int q) {
+	public List<Integer> robinKarp(String s, String p, int d, int q) {
 		List<Integer> res = new ArrayList<>();
 		int hp = 0;
 		int hs = 0;
@@ -70,10 +70,62 @@ public class StringMatcher {
 		// build fsm from p
 		// each state accept p.length's input
 		// thus has p.length's transfer path possible
+		int[][] tf = new int[p.length() + 1][256];
+		computeTf(tf, p);
 
 		// loop into s, when meet final state at i
 		// then add solution as i - p.length
+		int state = 0;
+		for (int i = 0; i < s.length(); i++) {
+			state = tf[state][s.charAt(i)];
+			if (state == p.length()) {
+				res.add(i - p.length() + 1);
+			}
+		}
 
 		return res;
+	}
+
+	void computeTf(int[][] tf, String p) {
+		for (int i = 0; i < tf.length; i++) {
+			for (int j = 0; j < 256; j++) {
+				tf[i][j] = nextState(i, j, p);
+			}
+		}
+	}
+
+	private int nextState(int state, int c, String p) {
+		if (state < p.length() && c == p.charAt(state)) {
+			return state + 1;
+		}
+
+		/**
+		 * ns is next potential state, simple idea is
+		 *          1 2 3 4 5 6 7
+		 *          a b a b a c a
+		 * ns = 6   a b a b a
+		 *              a b a c a  match last line?
+		 *
+		 * VERY USEFUL TEST CASE
+		 * pattern 			state 	input
+		 * abcd    			2     	a
+		 * aabcd   			1     	a
+		 * ababaca          7       b/a/c
+		 */
+		for (int ns = state; ns > 0; ns--) {
+			if (p.charAt(ns - 1) == c) {
+				int i = 0;
+				for (; i < ns - 1; i++) {
+					if (p.charAt(i) != p.charAt(state - ns + 1 + i)) {
+						break;
+					}
+				}
+				if (i == ns - 1) {
+					return ns;
+				}
+			}
+		}
+
+		return 0;
 	}
 }
