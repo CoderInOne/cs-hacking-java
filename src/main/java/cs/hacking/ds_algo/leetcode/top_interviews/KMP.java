@@ -8,6 +8,8 @@ import java.util.List;
  * line by line. How do you confirm that you code is perfect?
  * People is not born as perfect
  * Check MARKING place that I make mistake
+ *
+ * TODO string matching complexity and theory
  */
 public class KMP {
     public List<Integer> matching(String s, String p) {
