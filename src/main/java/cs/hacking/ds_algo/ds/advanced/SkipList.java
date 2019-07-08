@@ -1,26 +1,35 @@
 package cs.hacking.ds_algo.ds.advanced;
 
-import java.util.List;
 import java.util.Random;
 
 /**
  * skip like BST
- *
+ * <p>
  * express lane:     10 ------------ 20 ----------- 30
  *                   |               |              |
  * normal lane       10 12 14 18 19  20 21 23 24 25 30
- *
+ * <p>
  * https://www.geeksforgeeks.org/skip-list-set-2-insertion/
  * visualize: https://people.ok.ubc.ca/ylucet/DS/SkipList.html
+ *
+ * hard to test and verify
  */
 public class SkipList {
 
     class Node {
         int key;
-        List<List<Node>> forward;
-        Node(int key, List<List<Node>> forward) {
+        Node[] forward;
+
+        Node(int key, int level) {
             this.key = key;
-            this.forward = forward;
+            this.forward = new Node[level + 1];
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "key=" + key +
+                    '}';
         }
     }
 
@@ -28,32 +37,112 @@ public class SkipList {
     private Node header;
     private final static int MAX_LEVEL = 3;
     private final static Random RAND = new Random();
+    private float p;
 
-    int randomLevel() {
-        return RAND.nextInt(MAX_LEVEL);
+    public SkipList(float p) {
+        // level=MAX_LEVEL: because header can forward to each level
+        this.header = new Node(-1, MAX_LEVEL);
+        this.p = p;
     }
-    /**
-     * Insert(list, searchKey)
-     * 1. update[MaxLevel+1], current level, c = header,
-     * 2. for i from curLevel to 0:
-     * 3.     while c.forward[i] != NULL &&
-     * 4.           c.forward[i].key < key
-     * 5.               c = c.forward[0]
-     * 6.     update[i] = c
-     * 7. node = c.forward[0]
-     * 8. if node == NULL or node.key != k:
-     * 9.     newLevel = randomLevel()
-     * 10.    if newLevel > curLevel:
-     * 11.        for i is curLevel + 1 to newLevel:
-     * 12.            update[i] = header
-     * 13.        curLevel = newLevel
-     * 14.    newNode = createNode(k, v, newLevel)
-     * 15.    for i from 0 to newLevel:
-     * 16.        newNode.forward[i] = update[i].forward[i]
-     * 17.        update[i].forward[i] = newNode
-     */
-    public void add(int key) {
 
+    // Visible for testing
+    void setCurLevel(int l) {
+        this.curLevel = l;
+    }
+
+    // shape of skip list determined by random distribution
+    int randomLevel() {
+        // return RAND.nextInt(MAX_LEVEL);
+        int l = 0;
+        while (RAND.nextFloat() < p & l < MAX_LEVEL) {
+            l++;
+        }
+        return l;
+    }
+
+    public void delete(int key) {
+        Node[] update = new Node[MAX_LEVEL+1];
+        Node x = header;
+        for (int i = curLevel; i >= 0; i--) {
+            while (x != null && x.forward[i].key < key) {
+                x = x.forward[i];
+            }
+            update[i] = x;
+        }
+
+        x = x.forward[0];
+        if (x.key == key) {
+            for (int i = 0; i <= curLevel; i++) {
+                if (update[i] != null && update[i].forward[i] != x) {
+                    break;
+                }
+                update[i].forward[i] = x.forward[i];
+            }
+            x = null; // help GC
+
+            // higher level, element distributed sparser
+            // so we reduce level from top to bottom
+            while (curLevel > 0 && header.forward[curLevel] == null) {
+                curLevel -= 1;
+            }
+        }
+    }
+
+    public boolean search(int key) {
+        Node n = searchKey(key);
+        return n.key == key;
+    }
+
+    private Node searchKey(int key) {
+        Node n = header;
+        for (int i = curLevel; i >= 0; i--) {
+            if (n.forward != null && n.forward[i].key < key) {
+                n = n.forward[i];
+            }
+        }
+
+        n = n.forward[0];
+        return n;
+    }
+
+    public void add(int key) {
+        Node[] update = new Node[MAX_LEVEL + 1];
+        Node current = header;
+        for (int i = curLevel; i >= 0; i--) {
+            while (current.forward[i] != null && current.forward[i].key < key) {
+                current = current.forward[i];
+            }
+            update[i] = current;
+        }
+
+        current = current.forward[0];
+
+        if (current == null || current.key != key) {
+            int newLevel = randomLevel();
+
+            if (newLevel > curLevel) {
+                for (int i = curLevel + 1; i <= newLevel; i++) {
+                    update[i] = header;
+                }
+                curLevel = newLevel;
+            }
+
+            Node newNode = new Node(key, newLevel);
+
+            /*
+             * update old forward think about this:
+             * 6 ------> 4
+             * change to:
+             * 6 ---> 5 ---> 4
+             * update is path to inserted node, so we should update it
+             * when node inserted, same as linked list ptr update
+             */
+            for (int i = 0; i <= newLevel; i++) {
+                // we create connection upper until newLevel
+                newNode.forward[i] = update[i].forward[i];
+                update[i].forward[i] = newNode;
+            }
+        }
     }
 
     @Override
@@ -61,6 +150,17 @@ public class SkipList {
         /**
          * each level && forward list
          */
-        return super.toString();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i <= curLevel; i++) {
+            Node n = header.forward[i];
+            sb.append("Level ").append(i).append(":");
+            while (n != null) {
+                sb.append(n.key).append(" ");
+                n = n.forward[i];
+            }
+            sb.append("\n");
+        }
+
+        return sb.toString();
     }
 }
