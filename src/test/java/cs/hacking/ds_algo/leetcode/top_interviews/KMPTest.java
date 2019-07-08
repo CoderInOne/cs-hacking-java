@@ -1,5 +1,6 @@
 package cs.hacking.ds_algo.leetcode.top_interviews;
 
+import cs.hacking.ds_algo.strings.KMP;
 import org.junit.Test;
 
 import java.util.*;
