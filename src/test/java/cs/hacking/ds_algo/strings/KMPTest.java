@@ -1,4 +1,4 @@
-package cs.hacking.ds_algo.leetcode.top_interviews;
+package cs.hacking.ds_algo.strings;
 
 import cs.hacking.ds_algo.strings.KMP;
 import org.junit.Test;
