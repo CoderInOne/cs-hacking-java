@@ -13,8 +13,29 @@ package cs.hacking.ds_algo.leetcode.top_interviews;
  * p could be empty and contains only lowercase letters a-z, and characters like . or *.
  * <p>
  * online regex: https://regexr.com/
+ * solution: https://leetcode.com/articles/regular-expression-matching/
  */
 public class RegExMatching {
+	// Recursive solution. It's very hard to see it
+	// Next time: think about simple situation - no *
+	// High level thinking: recursive pattern
+	public boolean isMatch(String s, String p) {
+		if (p.isEmpty()) {
+			return s.isEmpty();
+		}
+
+		boolean firstMatch = !s.isEmpty() && (s.charAt(0) == p.charAt(0) || p.charAt(0) == '.');
+		if (p.length() >= 2 && p.charAt(1) == '*') {
+			return isMatch(s, p.substring(2)) || firstMatch && isMatch(s.substring(1), p);
+		}
+		else {
+			return firstMatch && isMatch(s.substring(1), p.substring(1));
+		}
+	}
+
+	// TODO DP
+
+	// FAIL CODE
     public boolean match(String s, String p) {
         int i = 0;
         int j = 0;
