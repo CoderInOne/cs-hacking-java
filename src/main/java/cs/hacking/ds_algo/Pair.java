@@ -2,6 +2,11 @@ package cs.hacking.ds_algo;
 
 import java.util.Objects;
 
+/**
+ * Warning: char should be cast before use as int
+ * @param <One>
+ * @param <Two>
+ */
 public class Pair<One, Two> {
 	private One o;
 	private Two t;
@@ -28,6 +33,7 @@ public class Pair<One, Two> {
 		if (this == o1) return true;
 		if (o1 == null || getClass() != o1.getClass()) return false;
 		Pair<?, ?> pair = (Pair<?, ?>) o1;
+
 		return Objects.equals(o, pair.o) &&
 				Objects.equals(t, pair.t);
 	}

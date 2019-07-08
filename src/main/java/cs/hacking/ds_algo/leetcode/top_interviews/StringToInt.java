@@ -8,7 +8,7 @@ public class StringToInt {
 	public int str2int(String s) {
         int res = 0, i = 0, sign = 1;
         char[] cs = s.toCharArray();
-        int threshold = 214748364;
+        int threshold = Integer.MAX_VALUE / 10;
 
         if (cs.length == 0) {
         	return 0;

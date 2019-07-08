@@ -76,12 +76,10 @@ public class StringMatchTest {
 	@Test
 	public void computeTfFsm() {
 		String p = "abcd";
-		Map<Pair<Integer, Integer>, Integer> tf = new HashMap<>(p.length() + 1);
-//		strMatcher.computeTf(tf, p);
-//		System.out.println(tf);
-//		tf.get(Pair.from(0, 97));
-		assertEquals(1, (int) tf.get(Pair.from(0, 97)));
-		assertEquals(1, (int) tf.get(Pair.from(1, 97)));
-		assertEquals(1, (int) tf.get(Pair.from(2, 97)));
+		Map<Pair<Integer, Character>, Integer> tf = new HashMap<>(p.length() + 1);
+		strMatcher.computeTf(tf, p);
+		assertEquals(1, (int) tf.get(Pair.from(0, 'a')));
+		assertEquals(1, (int) tf.get(Pair.from(1, 'a')));
+		assertEquals(1, (int) tf.get(Pair.from(2, 'a')));
 	}
 }

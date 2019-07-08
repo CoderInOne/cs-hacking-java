@@ -24,6 +24,7 @@ public class StringToIntTest {
 		testMap.put("2147483647", Integer.MAX_VALUE);
 		testMap.put("-2147483648", Integer.MIN_VALUE);
 		testMap.put("-2147483649", Integer.MIN_VALUE);
+		testMap.put("-91283472332", Integer.MIN_VALUE);
 		testMap.put("0-1", 0);
 		testMap.put("1-1", 1);
 		testMap.put("-5-", -5);

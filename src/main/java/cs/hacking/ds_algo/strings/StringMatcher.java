@@ -71,14 +71,14 @@ public class StringMatcher {
 		// build fsm from p
 		// each state accept p.length's input
 		// thus has p.length's transfer path possible
-		Map<Pair<Integer, Integer>, Integer> tf = new HashMap<>(p.length() + 1);
+		Map<Pair<Integer, Character>, Integer> tf = new HashMap<>(p.length() + 1);
 		computeTf(tf, p);
 
 		// loop into s, when meet final state at i
 		// then add solution as i - p.length
 		int state = 0;
 		for (int i = 0; i < s.length(); i++) {
-			state = tf.get(Pair.from(state, (int) s.charAt(i)));
+			state = tf.get(Pair.from(state, s.charAt(i)));
 			if (state == p.length()) {
 				res.add(i - p.length() + 1);
 			}
@@ -87,19 +87,14 @@ public class StringMatcher {
 		return res;
 	}
 
-	void computeTf(Map<Pair<Integer, Integer>, Integer> tf, String p) {
-//		for (int i = 0; i < tf.length; i++) {
-//			for (int j = 0; j < 256; j++) {
-//				tf[i][j] = nextState(i, j, p);
-//			}
-//		}
-		Set<Integer> s = new HashSet<>();
-		for (int c : p.toCharArray()) {
+	void computeTf(Map<Pair<Integer, Character>, Integer> tf, String p) {
+		Set<Character> s = new HashSet<>();
+		for (char c : p.toCharArray()) {
 			s.add(c);
 		}
 
 		for (int i = 0; i <= p.length(); i++) {
-			for (int c : s) {
+			for (char c : s) {
 				tf.put(Pair.from(i, c), nextState(i, c, p));
 			}
 		}
