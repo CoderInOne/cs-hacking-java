@@ -33,8 +33,6 @@ public class RegExMatching {
 		}
 	}
 
-	// TODO DP
-
 	// FAIL CODE
     public boolean match(String s, String p) {
         int i = 0;
@@ -66,8 +64,6 @@ public class RegExMatching {
                 }
             }
         }
-
-        System.out.println("j:" + j + ",i:" + i + ",p:" + p);
 
         return j >= p.length() - 1 || (j + 1 == p.length() - 1 && p.charAt(j + 1) == '*');
     }
