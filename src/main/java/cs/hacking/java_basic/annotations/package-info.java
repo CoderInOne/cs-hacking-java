@@ -1,11 +1,10 @@
 package cs.hacking.java_basic.annotations;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-import java.lang.reflect.UndeclaredThrowableException;
-
 /**
+ * vs XML?
+ * 1. simple, easy, convenient but coupled with code
+ * 2. add meta data to biz code, make it reusable
+ *
  * 1. AP works at compile time TODO lombok/motan @MotanAsync generator
  * 2. Retention.RUNTIME work as reflection way in runtime (after loaded into JVM)
  *    TODO how Spring @Component and @Autowired works
