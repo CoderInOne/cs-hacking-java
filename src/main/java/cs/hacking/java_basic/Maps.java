@@ -19,4 +19,10 @@ public class Maps {
 	 * 			System.out.println(v);
 	 *      });
 	 */
+
+	/**
+	 * thread-safe Map
+	 * HashTable: all synchronized method
+	 * TODO ConcurrentHashMap
+	 */
 }
