@@ -1,22 +1,12 @@
 package cs.hacking.ds_algo.leetcode.ti;
 
+/**
+ * 1. substring version is good
+ * 2. no need to find shortest string, just select
+ *    first string
+ */
 public class LongestCommonPrefix {
     public String solution(String[] in) {
-        /**
-         * flower
-         * flow
-         * flight
-         *
-         * List<Character> res = new List
-         * let i = 0 as current char pos
-         * while (true)
-         *     for j = [0, in.length):
-         *         if (j == 0)
-         *             cur = in[j].charAt(i)
-         *         else if (i == in[j].length || in[j].charAt(i) != cur)
-         *             return new String(in.toArray())
-         *     i++
-         */
         if (in == null || in.length == 0) {
             return "";
         }
@@ -36,8 +26,7 @@ public class LongestCommonPrefix {
             for (int j = 0; j < in.length; j++) {
                 if (j == 0) {
                     c = in[j].charAt(i);
-                }
-                else if (c != in[j].charAt(i)) {
+                } else if (c != in[j].charAt(i)) {
                     return new String(buf, 0, i);
                 }
             }
