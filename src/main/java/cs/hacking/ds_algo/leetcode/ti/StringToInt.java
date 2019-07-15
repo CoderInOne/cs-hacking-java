@@ -1,4 +1,4 @@
-package cs.hacking.ds_algo.leetcode.top_interviews;
+package cs.hacking.ds_algo.leetcode.ti;
 
 /**
  * Compare to JDK implementation, this one is more elegant

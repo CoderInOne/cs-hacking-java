@@ -1,10 +1,9 @@
-package cs.hacking.ds_algo.leetcode.top_interviews;
+package cs.hacking.ds_algo.leetcode.ti;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;

@@ -1,6 +1,4 @@
-package cs.hacking.ds_algo.leetcode.top_interviews;
-
-import java.util.Stack;
+package cs.hacking.ds_algo.leetcode.ti;
 
 public class ValidParentheses {
     public boolean isValid(String s) {
