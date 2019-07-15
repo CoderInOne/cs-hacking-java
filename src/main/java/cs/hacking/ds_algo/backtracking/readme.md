@@ -7,11 +7,11 @@ Keywords: *tracking* *back*
 ## @Wiki
 
 1. search depth-first order from root to last node. based on valid candidate
-   enum all next level node, and check them is a candidate to
+   enum all next level node, and check them is a candidate too
 2. if node and backtracked candidates can not be valid solution, abandon it
    or search next
 3. abandon means cut a sub search tree, which reduce time
-4. total cost sum of checking each node
+4. total cost: sum of checking each node
 
 ## Check NQueens
 
