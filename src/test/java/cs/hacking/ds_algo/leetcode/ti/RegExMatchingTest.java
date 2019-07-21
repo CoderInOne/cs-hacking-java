@@ -1,4 +1,4 @@
-package cs.hacking.ds_algo.leetcode.top_interviews;
+package cs.hacking.ds_algo.leetcode.ti;
 
 import cs.hacking.ds_algo.Pair;
 import org.junit.Before;
